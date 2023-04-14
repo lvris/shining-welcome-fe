@@ -1,6 +1,7 @@
 .vite-ssg-temp
 
 node_modules
+shining-background
 .DS_Store
 dist
 dist-ssr
