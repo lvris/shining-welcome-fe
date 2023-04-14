@@ -1,6 +1,6 @@
 <template>
   <el-config-provider namespace="ep">
-  <el-container>
+  <el-container m-auto>
     <el-header>
       <BaseHeader />
     </el-header>
@@ -15,5 +15,8 @@
 #app {
   text-align: center;
   color: var(--ep-text-color-primary);
+}
+#app > section {
+  max-width: 80vh;
 }
 </style>

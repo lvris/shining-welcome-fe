@@ -1,12 +1,16 @@
-<script lang="ts" setup>
-import { toggleDark } from "~/composables";
-</script>
-
 <template>
-  <el-menu mode="horizontal">
-    <el-menu-item index="0" disabled>LOGO</el-menu-item>
-    <el-menu-item index="1">1</el-menu-item>
-    <el-menu-item index="2">2</el-menu-item>
+  <el-menu
+    mode="horizontal"
+    default-active="1"
+    :ellipsis="false"
+    :router="true"
+  >
+    <a href="http://shiningacg.org" self-center>
+      <img src="/shining.svg" clas="logo" alt="Shining" height="45">
+    </a>
+    <div flex-grow></div>
+    <el-menu-item index="1" route="welcome">Welcome</el-menu-item>
+    <el-menu-item index="2" route="manage">Manage</el-menu-item>
     <el-menu-item h="full" @click="toggleDark()">
       <button
         class="border-none w-full bg-transparent cursor-pointer"
@@ -17,3 +21,7 @@ import { toggleDark } from "~/composables";
     </el-menu-item>
   </el-menu>
 </template>
+
+<script lang="ts" setup>
+import { toggleDark } from "~/composables";
+</script>
