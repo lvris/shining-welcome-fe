@@ -2,11 +2,14 @@
   <el-config-provider namespace="ep">
   <el-container m-auto>
     <el-header>
-      <BaseHeader />
+      <Header />
     </el-header>
     <el-main>
       <router-view />
     </el-main>
+    <el-footer>
+      <Footer />
+    </el-footer>
   </el-container>
   </el-config-provider>
 </template>
