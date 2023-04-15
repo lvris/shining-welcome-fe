@@ -1,8 +1,10 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import welcome from "./components/welcome/Welcome.vue";
+import Welcome from "./components/welcome/Welcome.vue";
+import Manage from "./components/manage/Manage.vue";
 
 const routes = [
-  { path: '/welcome', component: welcome }
+  { path: '/welcome', component: Welcome },
+  { path: '/manage', component: Manage }
 ]
 const router = createRouter({
   history: createWebHashHistory(),
