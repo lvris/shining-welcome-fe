@@ -39,7 +39,7 @@ import { IGuest } from '~/common/interfaces/guest.interface';
 const codeVisible = ref(false);
 const qrValue = ref('');
 function showQRCode(id: number) {
-  qrValue.value = import.meta.env.VITE_ADDR+`#/manage${id}`;
+  qrValue.value = import.meta.env.VITE_ADDR+`#/manage/${id}`;
   codeVisible.value = true;
 }
 
