@@ -1,7 +1,6 @@
 .vite-ssg-temp
 
 node_modules
-shining-background
 .DS_Store
 dist
 dist-ssr
@@ -13,3 +12,5 @@ package-lock.json
 pnpm-lock.yaml
 
 *.log
+
+src/components.d.ts
