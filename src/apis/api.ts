@@ -2,7 +2,9 @@ import axios from "axios";
 
 const request = axios.create({
   timeout: 50000,
-  
+  headers: {
+    Accept: 'application/json',
+  },
 })
 
 // Req
@@ -10,7 +12,11 @@ request.interceptors.request.use(
   config => {
     // Base
     config.baseURL = import.meta.env.VITE_BASE;
-    // TODO: Token
+    // Token
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
     return config;
   },
   error => {
