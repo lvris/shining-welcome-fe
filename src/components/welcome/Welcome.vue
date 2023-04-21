@@ -1,60 +1,49 @@
 <template>
-  <el-form
-    label-position="top"
-    size="large"
-    :model="form"
-    :rules="rules"
-    :require-asterisk-position="right"
-    status-icon
-  >
-    <el-form-item label="姓名" prop="name">
-      <el-input v-model="form.name" />
-    </el-form-item>
-    <el-form-item label="电话号码" prop="phone">
-      <el-input v-model="form.phone" />
-    </el-form-item>
-    <el-form-item label="就读学校" prop="school">
-      <el-input v-model="form.school" />
-    </el-form-item>
-    <el-form-item label="COS 角色" prop="cos">
-      <el-input v-model="form.cos" />
-    </el-form-item>
-  </el-form>
+  <div class="w-90% m-x-auto my-5">
+    <h2>Shining 祭报名表单</h2>
+    <el-alert :closable="false" type="info" show-icon center>
+      信息只作保卫处审核使用, 我们将尽力保护您的个人信息
+    </el-alert>
+  </div>
+
+  <WelcomeForm 
+    class="w-90% m-auto"
+    @submit="handleSubmit"
+  />
+
+  <el-dialog center v-model="codeVisible" title="QRCode">
+    <el-alert center type="info" show-icon>
+      请在进入校园时出示此二维码
+    </el-alert>
+    <QRCode 
+      class="my-4 text-center"
+      image="/shining.png"
+      :value=qrValue
+      :dots-options="{
+        type: 'extra-rounded'
+      }"
+    />
+  </el-dialog>
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from 'vue';
-import type { FormInstance, FormRules } from 'element-plus';
-import { right } from '@popperjs/core';
+import QRCode from "qrcode-vue3";
+import { ElMessage } from 'element-plus';
+import { ref } from 'vue';
+import { createGuest } from '~/apis/guestAPI';
+import { IGuest } from '~/common/interfaces/guest.interface';
 
-const form = reactive({
-  phone: '',
-  name: '',
-  school: '',
-  cos: '',
-})
+const codeVisible = ref(false);
+const qrValue = ref('');
 
-const rules = reactive<FormRules>({
-  name: [
-    { 
-      required: true,
-      message: '请输入姓名',
-      trigger: 'blur',
-    }
-  ],
-  phone: [
-    { 
-      required: true,
-      message: '请输入手机号码',
-      trigger: 'blur',
-    }
-  ],
-  school: [
-    { 
-      required: true,
-      message: '请输入学校名称',
-      trigger: 'blur',
-    }
-  ],
-})
+function handleSubmit(guest: IGuest) {
+  createGuest(guest).then(data => {
+    qrValue.value = import.meta.env.VITE_ADDR+`#/manage${data.id}`;
+    codeVisible.value = true;
+  }).catch(error => {
+    ElMessage.error(error);
+  })
+}
+
+// TODO: Check Token to generate QR
 </script>
