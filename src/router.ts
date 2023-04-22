@@ -1,10 +1,10 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import { store } from "./composables/store";
 import Welcome from "./components/welcome/Welcome.vue";
 import Manage from "./components/manage/Manage.vue";
 import ManageGuest from "./components/manage/ManageGuest.vue";
 import Auth from "./components/auth/Auth.vue";
-import { parceToken } from "./apis/authAPI";
+import { authAdmin } from "./apis/authAPI";
 
 const routes = [
   { path: '/', redirect: '/welcome' },
@@ -14,27 +14,22 @@ const routes = [
   { path: '/auth', component: Auth }
 ]
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes,
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from) => {
   // Check Admin State
-  if(store.admin || to.fullPath === '/welcome' || to.fullPath === '/auth') {
-    next();
+  if(store.admin || to.path === '/welcome' || to.path === '/auth') {
+    return true;
   }
-  let token = localStorage.getItem('token');
-  if(token === null || token === '') {
-    next('/auth');
-  }
-  parceToken().then(data => {
-    if(data.admin) {
+  const result = await authAdmin()
+    .then(data => {
       store.admin = true;
-      next();
-    } else {
-      next('/auth');
-    }
-  })
+      return true;
+    })
+    .catch(err => ({ path: '/auth', query: { to: to.fullPath } }))
+  return result;
 })
 
 export default router;

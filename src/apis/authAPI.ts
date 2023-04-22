@@ -1,7 +1,7 @@
 import { IAuth, IToken } from "~/common/interfaces/auth.interface";
 import api from "./api";
 
-export async function authAdmin(body: IAuth): Promise<IToken> {
+export async function authAdmin(body: IAuth = {}): Promise<IToken> {
   return api.post('auth', body)
     .then(res => res.data);
 }

@@ -26,11 +26,18 @@
 <script setup lang="ts">
 import { ElMessage } from 'element-plus';
 import { onMounted, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import { authAdmin } from '~/apis/authAPI';
 
 onMounted(() => {
-  ElMessage.info('您似乎没有访问权限, 请输入密码访问');
+  ElMessage.info({
+    message: '您似乎没有访问权限, 请输入密码访问', 
+    duration: 1000
+  });
 })
+
+const route = useRoute();
+const router = useRouter();
 
 const password = ref<string>('');
 function checkPassword() {
@@ -38,6 +45,11 @@ function checkPassword() {
     .then(data => {
       localStorage.setItem('token', data.token);
       ElMessage.success('验证成功');
+
+      const to = route.query.to;
+      if(to) {
+        router.push({path: to as string});
+      }
     })
     .catch(err => {
       ElMessage.error('验证失败');
