@@ -7,12 +7,13 @@
   border
 >
   <template #extra>
-    <el-button>通过</el-button>
+    <el-button text>通过</el-button>
   </template>
 
   <el-descriptions-item>
     <template #label>
       <div class="cell-item">
+        <i class="mr-1 i-ep-flag" />
         ID
       </div>
     </template>
@@ -21,6 +22,7 @@
   <el-descriptions-item>
     <template #label>
       <div class="cell-item">
+        <i class="mr-1 i-ep-user" />
         姓名
       </div>
     </template>
@@ -29,6 +31,7 @@
   <el-descriptions-item>
     <template #label>
       <div class="cell-item">
+        <i class="mr-1 i-ep-user-filled" />
         圈名
       </div>
     </template>
@@ -37,6 +40,7 @@
   <el-descriptions-item>
     <template #label>
       <div class="cell-item">
+        <i class="mr-1 i-ep-school" />
         学校
       </div>
     </template>
@@ -45,6 +49,7 @@
   <el-descriptions-item>
     <template #label>
       <div class="cell-item">
+        <i class="mr-1 i-ep-iphone"/>
         联系方式
       </div>
     </template>
@@ -53,6 +58,7 @@
   <el-descriptions-item>
     <template #label>
       <div class="cell-item">
+        <i class="mr-1 i-ep-avatar" />
         Cosplay
       </div>
     </template>
@@ -61,6 +67,7 @@
   <el-descriptions-item>
     <template #label>
       <div class="cell-item">
+        <i class="mr-1 i-ep-stamp" />
         状态
       </div>
     </template>

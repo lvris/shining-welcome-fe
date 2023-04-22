@@ -11,7 +11,7 @@
   >
     <el-form-item label="就读/毕业院校" prop="school">
       <el-input v-model="form.school" placeholder="请输入..." >
-        <template #prefix><i inline-flex i="ep-school"/></template>
+        <template #prefix><i class="i-ep-school"/></template>
       </el-input>
     </el-form-item>
     <el-form-item label="联系方式 (电话/QQ/微信)" prop="contact">
@@ -24,38 +24,38 @@
           </el-select>
         </template>
         <template #prefix>
-          <i inline-flex i="ep-iphone"/>
+          <i class="i-ep-iphone"/>
         </template>
       </el-input>
     </el-form-item>
     <el-form-item label="姓名" prop="name">
       <el-input v-model="form.name" placeholder="请输入...">
-        <template #prefix><i inline-flex i="ep-avatar"/></template>
+        <template #prefix><i class="i-ep-user"/></template>
       </el-input>
     </el-form-item>
     <el-form-item label="圈名 (称呼)" prop="cname">
       <el-input v-model="form.cname" placeholder="不填即同姓名">
-        <template #prefix><i inline-flex i="ep-avatar"/></template>
+        <template #prefix><i class="i-ep-user-filled"/></template>
       </el-input>
     </el-form-item>
     <el-form-item label="COS 角色" prop="cos">
       <el-input v-model="form.cos" placeholder="不出则不填">
-        <template #prefix><i inline-flex i="ep-stamp"/></template>
+        <template #prefix><i class="i-ep-avatar"/></template>
       </el-input>
     </el-form-item>
   </el-form>
 
-  <div flex justify-evenly>
+  <div class="flex justify-evenly">
     <el-button 
       size="large"
       type="primary"
       @click="confirm"
-    > 提交 <i inline-flex i="ep-upload"/>
+    > 提交 <i class="i-ep-upload"/>
     </el-button>
     <el-button 
       size="large"
       @click="formRef?.resetFields()"
-    > 重置 <i inline-flex i="ep-refresh"/>
+    > 重置 <i class="i-ep-refresh"/>
     </el-button>
   </div>
 </div>
