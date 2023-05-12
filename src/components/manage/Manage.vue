@@ -38,7 +38,13 @@ onMounted(() => {
     .then(data => {
       tableSize.value = data;
     })
-  changePage(1);
+  
+  let query = router.currentRoute.value.query?.page;
+  if(query === null || Number.isNaN(+query)) {
+    changePage(1);
+  } else {
+    changePage(+query);
+  }
 });
 
 const tableSize = ref(100);
@@ -73,6 +79,11 @@ function changePage(val: number) {
     .then(data => {
       tableData.value = data;
   }).then(() => {
+      router.replace({
+        query: {
+          page: val,
+        }
+      })
       currentPage.value = val;
       loading.value = false;
   })

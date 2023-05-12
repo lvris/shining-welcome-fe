@@ -136,7 +136,11 @@ const buttonType = computed(() => {
   }
 })
 const buttonDisable = computed(() => {
-  return guest.value.status === Status.BAN;
+  if(Number.isNaN(id.value) || id.value <= 0)
+    return true;
+  if(guest.value.status === Status.BAN)
+    return true;
+  return false;
 })
 
 function grantGuest() {
