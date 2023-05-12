@@ -28,6 +28,7 @@ import { ElMessage } from 'element-plus';
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { authAdmin } from '~/apis/authAPI';
+import { store } from '~/composables/store';
 
 onMounted(() => {
   ElMessage.info({
@@ -44,6 +45,7 @@ function checkPassword() {
   authAdmin({password: password.value})
     .then(data => {
       localStorage.setItem('token', data.token);
+      store.admin = true;
       ElMessage.success('验证成功');
 
       const to = route.query.to;
