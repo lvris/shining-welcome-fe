@@ -1,5 +1,6 @@
 <template>
 <el-descriptions
+  v-loading="loading"
   class="margin-top"
   title="Guest"
   size="large"
@@ -7,7 +8,13 @@
   border
 >
   <template #extra>
-    <el-button text @click="grantGuest" :type="buttonType">
+    <el-button 
+      text 
+      @click="grantGuest" 
+      :type="buttonType" 
+      :loading="buttonLoad"
+      :disabled="buttonDisable"
+    >
       通过
     </el-button>
   </template>
@@ -85,35 +92,33 @@ import { queryGuestByID, updateGuestByID } from '~/apis/guestAPI';
 import { ContactType, Status } from '~/common/enums/guest.enum';
 import { Guest } from '~/common/interfaces/guest.interface';
 
-const route = useRoute();
-const id = ref(0);
-
-const guest:Ref<Guest> = ref({
-  cname: '',
-  contact: '',
-  contactType: ContactType.PHONE,
-  id: 0,
-  name: '',
-  school: '',
-  status: Status.WAIT,
-  cos: '',
-});
-
 onMounted(() => {
   id.value = +route.params.id;
   queryGuestByID(id.value)
     .then(data => {
-      guest.value = data;
+      setTimeout(() => {
+        loading.value = false;
+        guest.value = data;
+      }, 100);
     })
 })
 
-function grantGuest() {
-  updateGuestByID(id.value, {status: Status.OK})
-    .then(data => {
-      guest.value = data;
-    })
-}
+const loading = ref(true);
+const route = useRoute();
+const id = ref(0);
 
+const guest:Ref<Guest> = ref({
+  cname: 'placeholder',
+  contact: 'placeholder',
+  contactType: ContactType.PHONE,
+  id: 0,
+  name: 'placeholder',
+  school: 'placeholder',
+  status: Status.WAIT,
+  cos: 'placeholder',
+});
+
+const buttonLoad = ref(false);
 const buttonType = computed(() => {
   switch (guest.value.status) {
     case Status.BAN:
@@ -130,4 +135,16 @@ const buttonType = computed(() => {
       break;
   }
 })
+const buttonDisable = computed(() => {
+  return guest.value.status === Status.BAN;
+})
+
+function grantGuest() {
+  buttonLoad.value = true;
+  updateGuestByID(id.value, {status: Status.OK})
+    .then(data => {
+      guest.value = data;
+      buttonLoad.value = false;
+    })
+}
 </script>
