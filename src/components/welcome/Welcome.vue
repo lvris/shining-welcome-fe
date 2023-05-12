@@ -44,6 +44,8 @@ function showQRCode(id: number) {
 }
 
 onMounted(() => {
+  ElMessage.warning('报名已经截止, 您还可访问此页面重新生成二维码')
+
   const token = localStorage.getItem('token');
   if (!token) {
     return;
@@ -57,6 +59,11 @@ onMounted(() => {
 })
 
 function handleSubmit(guest: IGuest) {
+// Stop
+  ElMessage.error('报名已经截止, 您还可访问此页面重新生成二维码');
+  return;
+// End
+
   createGuest(guest).then(data => {
     if(data.token) {
       localStorage.setItem('token', data.token);
