@@ -7,7 +7,9 @@
   border
 >
   <template #extra>
-    <el-button text>通过</el-button>
+    <el-button text @click="grantGuest" :type="buttonType">
+      通过
+    </el-button>
   </template>
 
   <el-descriptions-item>
@@ -77,13 +79,14 @@
 </template>
 
 <script setup lang="ts">
-import { Ref, onMounted, ref } from 'vue';
+import { Ref, computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { queryGuestByID } from '~/apis/guestAPI';
+import { queryGuestByID, updateGuestByID } from '~/apis/guestAPI';
 import { ContactType, Status } from '~/common/enums/guest.enum';
 import { Guest } from '~/common/interfaces/guest.interface';
 
 const route = useRoute();
+const id = ref(0);
 
 const guest:Ref<Guest> = ref({
   cname: '',
@@ -97,10 +100,34 @@ const guest:Ref<Guest> = ref({
 });
 
 onMounted(() => {
-  const id = +route.params.id;
-  queryGuestByID(id)
+  id.value = +route.params.id;
+  queryGuestByID(id.value)
     .then(data => {
       guest.value = data;
     })
+})
+
+function grantGuest() {
+  updateGuestByID(id.value, {status: Status.OK})
+    .then(data => {
+      guest.value = data;
+    })
+}
+
+const buttonType = computed(() => {
+  switch (guest.value.status) {
+    case Status.BAN:
+      return 'danger';  
+      break;
+    case Status.OK:
+      return 'info';
+      break;
+    case Status.WAIT:
+      return 'success';
+      break;
+    default:
+      return 'warning';
+      break;
+  }
 })
 </script>
