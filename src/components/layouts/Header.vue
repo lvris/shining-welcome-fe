@@ -5,9 +5,9 @@
     :default-active="$route.path"
     :ellipsis="false"
   >
-    <a href="http://shiningacg.org" self-center>
+    <router-link to="/" class="self-center">
       <img src="/shining.svg" clas="logo" alt="Shining" height="45">
-    </a>
+    </router-link>
     <div flex-grow></div>
     <el-menu-item index="/welcome">Welcome</el-menu-item>
     <el-menu-item index="/manage">Manage</el-menu-item>
@@ -24,5 +24,4 @@
 
 <script lang="ts" setup>
 import { toggleDark } from "~/composables";
-import router from "~/router";
 </script>

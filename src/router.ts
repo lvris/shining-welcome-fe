@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { store } from "./composables/store";
+import Index from "./components/index/Index.vue";
 import Welcome from "./components/welcome/Welcome.vue";
 import Manage from "./components/manage/Manage.vue";
 import ManageGuest from "./components/manage/ManageGuest.vue";
@@ -7,7 +8,7 @@ import Auth from "./components/auth/Auth.vue";
 import { authAdmin } from "./apis/authAPI";
 
 const routes = [
-  { path: '/', redirect: '/welcome' },
+  { path: '/', component: Index },
   { path: '/welcome', component: Welcome },
   { path: '/manage', component: Manage },
   { path: '/manage/:id', component: ManageGuest },
@@ -20,7 +21,7 @@ const router = createRouter({
 
 router.beforeEach(async (to, from) => {
   // Check Admin State
-  if(store.admin || to.path === '/welcome' || to.path === '/auth') {
+  if(store.admin || to.path != '/manage') {
     return true;
   }
   const result = await authAdmin()
