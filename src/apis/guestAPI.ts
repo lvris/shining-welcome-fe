@@ -1,10 +1,15 @@
+import api from "./api";
 import { IGuest, Guest } from "~/common/interfaces/guest.interface";
 import { IPage } from "~/common/interfaces/common.interface";
-import api from "./api";
 import { IGuestUpdate } from "~/common/interfaces/guest.interface";
 
+export async function queryGuestSize(): Promise<number> {
+  return api.get('guest/total')
+    .then(res => res.data);
+}
+
 export async function queryGuestList(params: IPage = {}): Promise<Guest[]> {
-  return api.get(`guest`, {params: params})
+  return api.get('guest', {params: params})
     .then(res => res.data);
 }
 
